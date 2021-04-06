@@ -28,6 +28,7 @@ cd pash
 git pull
 cd ..
 tar -cvzf pash.tar.gz ./pash > /dev/null
+mkdir -p get
 mv pash.tar.gz get/
 ln -sf ./pash.tar.gz get/latest 
 
