@@ -38,7 +38,7 @@ def main():
     except Exception:
         log("Compiler failed, no need to worry, executing original script...")
         log(traceback.format_exc())
-        exit(1)
+        sys.exit(1)
 
 def main_body():
     ## Parse arguments
@@ -133,7 +133,7 @@ def compile_optimize_script(ir_filename, compiled_script_file, args):
     else:
         ## Instead of outputing the script here, we just want to exit with a specific exit code
         ## TODO: Figure out the code and save it somewhere
-        exit(120)
+        sys.exit(120)
 
 
 def compile_candidate_df_region(candidate_df_region, config):

@@ -152,7 +152,7 @@ if [ "$pash_execute_flag" -eq 1 ]; then
     par_eager_pid=$(spawn_eager "parallel input" "$pash_tee_stdout2" "$pash_par_eager_output")
 
     ## Run the compiler
-    setsid python3 "$RUNTIME_DIR/pash_runtime.py" ${pash_compiled_script_file} --var_file "${pash_runtime_shell_variables_file}" "${@:2}" &
+    setsid python3 -S "$RUNTIME_DIR/pash_runtime.py" ${pash_compiled_script_file} --var_file "${pash_runtime_shell_variables_file}" "${@:2}" &
     pash_compiler_pid=$!
     log "Compiler pid: $pash_compiler_pid"
 

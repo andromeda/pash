@@ -222,7 +222,7 @@ if [ "$pash_speculation_flag" -eq 1 ]; then
     source "$RUNTIME_DIR/pash_runtime_quick_abort.sh"
     pash_runtime_final_status=$?
 else
-    python3 "$RUNTIME_DIR/pash_runtime.py" ${pash_compiled_script_file} --var_file "${pash_runtime_shell_variables_file}" "${@:2}"
+    python3 -S "$RUNTIME_DIR/pash_runtime.py" ${pash_compiled_script_file} --var_file "${pash_runtime_shell_variables_file}" "${@:2}"
     pash_runtime_return_code=$?
     pash_redir_output echo "$$: Compiler exited with code: $pash_runtime_return_code"
     if [ "$pash_runtime_return_code" -ne 0 ] && [ "$pash_assert_compiler_success_flag" -eq 1 ]; then

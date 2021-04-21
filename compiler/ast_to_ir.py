@@ -7,6 +7,7 @@ from parse import parse_shell, from_ir_to_shell, from_ir_to_shell_file
 from expand import *
 import subprocess
 import traceback
+import sys
 
 import config
 
@@ -184,7 +185,7 @@ def combine_pipe(ast_nodes):
     else:
         ## If any part of the pipe is not an IR, the compilation must fail.
         log("Node: {} is not pure".format(AstNode(ast_nodes[0])))
-        exit(1)
+        sys.exit(1)
 
     ## Combine the rest of the nodes
     for ast_node in ast_nodes[1:]:
@@ -193,7 +194,7 @@ def combine_pipe(ast_nodes):
         else:
             ## If any part of the pipe is not an IR, the compilation must fail.
             log("Node: {} is not pure".format(AstNode(ast_nodes)))
-            exit(1)
+            sys.exit(1)
 
     return [combined_nodes]
 

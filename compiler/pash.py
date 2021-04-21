@@ -87,7 +87,7 @@ def parse_args():
 
     if (args.input == None):
         parser.print_usage()
-        exit()
+        sys.exit(0)
 
     ## Print all the arguments
     log("Arguments:")
@@ -119,7 +119,7 @@ def execute_script(compiled_script_filename, debug_level, command):
         os.remove(config.config['runtime']['immediate'])
     log("-" * 40) #log end marker
     ## Return the exit code of the executed script
-    exit(exec_obj.returncode)
+    sys.exit(exec_obj.returncode)
 
 if __name__ == "__main__":
     main()

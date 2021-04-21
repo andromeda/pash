@@ -15,8 +15,6 @@ if 'PASH_TOP' in os.environ:
 else:
     PASH_TOP = subprocess.run(GIT_TOP_CMD, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True).stdout.rstrip()
 
-PYTHON_VERSION = "python3"
-PLANNER_EXECUTABLE = os.path.join(PASH_TOP, "compiler/pash_runtime.py")
 RUNTIME_EXECUTABLE = os.path.join(PASH_TOP, "compiler/pash_runtime.sh")
 
 ## This is set in pash.py and pash_runtime.py accordingly.
