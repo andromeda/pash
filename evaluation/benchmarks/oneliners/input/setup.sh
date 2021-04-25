@@ -106,4 +106,32 @@ if [ "$#" -eq 1 ] && [ "$1" = "--full" ]; then
   #     cat 10G.txt >> 100G.txt
   #   done
   # fi
+elif [ "$#" -eq 1 ] && [ "$1" = "--small" ]; then
+  echo Generating full-size inputs
+  # FIXME PR: Do we need all of them?
+
+  if [ ! -f ./3G.txt ]; then
+    cp 10M 3G.txt
+    "$PASH_TOP/scripts/append_nl_if_not.sh" ./3G.txt
+  fi
+
+  if [ ! -f ./10G.txt ]; then
+    cat 100M.txt > 10G.txt
+    "$PASH_TOP/scripts/append_nl_if_not.sh" ./10G.txt
+  fi
+
+  if [ ! -f ./all_cmdsx100.txt ]; then
+    touch all_cmdsx100.txt
+    for (( i = 0; i < 100; i++ )); do
+      cat all_cmds.txt >> all_cmdsx100.txt
+    done
+  fi
+
+  # FIXME We might not need this
+  # if [ ! -f ./100G.txt ]; then
+  #   touch 100G.txt
+  #   for (( i = 0; i < 10; i++ )); do
+  #     cat 10G.txt >> 100G.txt
+  #   done
+  # fi
 fi

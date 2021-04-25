@@ -23,25 +23,40 @@ oneliners(){
   fi
   
   cd oneliners/
-
   cd ./input/
+
   ./setup.sh --full
   cd ..
 
   mkdir -p "$outputs_dir"
 
-  scripts_inputs=(
-    "nfa-regex;100M.txt"
-    "sort;3G.txt"
-    "top-n;1G.txt"
-    "wf;3G.txt"
-    "spell;1G.txt"
-    "diff;3G.txt"
-    "bi-grams;1G.txt"
-    "set-diff;3G.txt"
+  if [ "$2" = "--small" ]; then
+    scripts_inputs=(
+    "nfa-regex;10M.txt"
+    "sort;1G.txt"
+    "top-n;100M.txt"
+    "wf;1G.txt"
+    "spell;100M.txt"
+    "diff;1G.txt"
+    "bi-grams;100M.txt"
+    "set-diff;1G.txt"
     "sort-sort;1G.txt"
     "shortest-scripts;all_cmdsx100.txt"
-  )
+    )
+  else
+    scripts_inputs=(
+      "nfa-regex;100M.txt"
+      "sort;3G.txt"
+      "top-n;1G.txt"
+      "wf;3G.txt"
+      "spell;1G.txt"
+      "diff;3G.txt"
+      "bi-grams;1G.txt"
+      "set-diff;3G.txt"
+      "sort-sort;1G.txt"
+      "shortest-scripts;all_cmdsx100.txt"
+    )
+  fi
 
   touch "$seq_times_file"
   echo executing one-liners $(date) | tee -a "$seq_times_file"
@@ -77,7 +92,16 @@ unix50(){
   cd unix50/
 
   cd input/
-  ./setup.sh
+  if [ "$2" = "--full" ]; then
+    export IN_PRE=$PASH_TOP/evaluation/benchmarks/unix50/input/
+    ./setup.sh --full
+  else
+    ./setup.sh --small
+    export IN_PRE=$PASH_TOP/evaluation/benchmarks/unix50/input/small
+  fi
+
+
+
   cd ..
 
   mkdir -p "$outputs_dir"
@@ -87,7 +111,7 @@ unix50(){
   echo '' >> "$times_file"
 
   # FIXME this is the input prefix; do we want all to be IN 
-  export IN_PRE=$PASH_TOP/evaluation/benchmarks/unix50/input
+
 
   for number in `seq 36`
   do
@@ -163,7 +187,15 @@ analytics-mts(){
   cd analytics-mts/
 
   cd input/
-  ./setup.sh
+  if [ "$2" = "--full" ]; then
+    export IN="input/in.full.csv"
+    ./setup.sh --full
+  else
+    ./setup.sh --small
+    export IN="input/in.small.csv"
+  fi
+
+
   cd ..
 
   mkdir -p "$outputs_dir"
@@ -178,8 +210,6 @@ analytics-mts(){
     printf -v pad %20s
     padded_script="${script}.sh:${pad}"
     padded_script=${padded_script:0:20}
-
-    export IN="input/in.csv"
     outputs_file="${outputs_dir}/${script}.${outputs_suffix}"
 
     echo "${padded_script}" $({ time ./${script}.sh > "$outputs_file"; } 2>&1) | tee -a "$times_file"
@@ -199,7 +229,14 @@ poets(){
   cd poets/
 
   cd input/
-  ./setup.sh
+  if [ "$2" = "--full" ]; then
+    export IN="input/pg/"
+    ./setup.sh --full
+  else
+    ./setup.sh --small
+    export IN="input/small/"
+  fi
+
   cd ..
 
   mkdir -p "$outputs_dir"
@@ -239,7 +276,6 @@ poets(){
     IFS=";" read -r -a name_script_parsed <<< "${name_script}"
     name="${name_script_parsed[0]}"
     script="${name_script_parsed[1]}"
-    export IN="$PASH_TOP/evaluation/benchmarks/poets/input/genesis"
     printf -v pad %30s
     padded_script="${name}.sh:${pad}"
     padded_script=${padded_script:0:30}
@@ -463,3 +499,5 @@ posh() {
     done
     cd ..
 }
+
+#time $1 $@

@@ -2,7 +2,7 @@
 
 PASH_TOP=${PASH_TOP:-$(git rev-parse --show-toplevel)}
 
-[[ "$1" == "-c" ]] && { rm -rf genesis exodus pg; exit; }
+[[ "$1" == "-c" ]] && { rm -rf genesis exodus pg small; exit; }
 
 if [ ! -f ./genesis ]; then
   curl -sf http://www.gutenberg.org/cache/epub/8001/pg8001.txt > genesis
@@ -34,3 +34,8 @@ if [ ! -e ./pg ]; then
   cd ..
 fi
 
+
+if [ "$1" == "--small" ] && [ ! -e ./small ]; then
+  mkdir small
+  find pg/ -type f | head -400 | xargs cp -t small/
+fi

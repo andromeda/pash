@@ -10,6 +10,8 @@ PASH_TOP=${PASH_TOP:-$(git rev-parse --show-toplevel)}
 
 if [[ "$1" == "-c" ]]; then
     rm -f *.bz2 'in.csv'
+    rm -f 'in.full.csv'
+    rm -f 'in.small.csv'
     exit
 fi
 
@@ -22,4 +24,20 @@ if [ ! -f ./in.csv ]; then
     exit 1
   fi
   "$PASH_TOP/scripts/append_nl_if_not.sh"  in.csv
+fi
+
+
+if [ "$#" -eq 1 ] && [ "$1" = "--small" ];   then
+  if [ ! -f ./in.small.csv ]; then
+    file=in.small.csv
+    cat in.csv > $file
+    cat in.csv >> $file
+  fi 
+elif  [ "$#" -eq 1 ] && [ "$1" = "--full" ]; then
+  if [ ! -f ./in.full.csv ]; then
+    file=in.full.csv
+    for (( i = 0; i < 4 ; i++ )); do
+      cat in.csv >> $file;
+    done
+  fi
 fi

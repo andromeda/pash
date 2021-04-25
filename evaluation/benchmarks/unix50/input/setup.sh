@@ -15,6 +15,7 @@ if [[ "$1" == "-c" ]]; then
   for input in ${inputs[@]}
   do
     rm -f "${input}.txt"
+    rm -rf small
   done
   exit
 fi
@@ -37,6 +38,23 @@ if [ "$#" -eq 1 ] && [ "$1" = "--full" ]; then
     mv temp.txt $file
   done
 fi
+
+
+
+## FIXME: Calling this script with --full is not idempotent.
+if [ "$#" -eq 1 ] && [ "$1" = "--small" ]; then
+  if [ ! -e ./small ]; then
+    mkdir small
+    for file in *.txt; do
+      cat $file | head -n 5000000 > small/$file
+    done
+  fi
+fi
+
+
+
+
+
 
 if [ "$#" -eq 1 ] && [ "$1" = "--gen-full" ]; then
   echo Generting full-size inputs
