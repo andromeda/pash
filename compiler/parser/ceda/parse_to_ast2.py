@@ -69,10 +69,12 @@ def parse_to_ast (inputPath, init=True):
                 linno_after = linno_after + 1; # The last line wasn't counted
 
                 if (inputPath != "-"):
-                    assert (linno_after == len (lines));
+                    ## Both of these assertions check "our" assumption with respect to the final parser state
+                    ## and are therefore not necessary if they become an issue.
+                    assert((linno_after == len (lines)) or (linno_after == len (lines) + 1))
 
                     # Last line did not have a newline
-                    assert (len (lines [-1]) > 0 and (lines [-1][-1] != '\n'));
+                    assert(len (lines [-1]) > 0 and (lines [-1][-1] != '\n'))
             else:
                 assert (nleft_after == 0); # Read whole lines
 
