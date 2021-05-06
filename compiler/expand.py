@@ -211,7 +211,7 @@ def lookup_variable(var, config):
         return config['shell_variables']['pash_input_args']
     elif(var == '#'):
         _type, input_args = config['shell_variables']['pash_input_args']
-        return (None, len(input_args.split()))
+        return (None, str(len(input_args.split())))
     elif(var.isnumeric() and int(var) >= 1):
         _type, input_args = config['shell_variables']['pash_input_args']
         split_args = input_args.split()
