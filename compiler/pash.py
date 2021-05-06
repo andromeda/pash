@@ -123,10 +123,13 @@ def preprocess(ast_objects, config):
 def execute_script(compiled_script_filename, debug_level, command, arguments, shell_name):
     new_env = os.environ.copy()
     new_env["PASH_TMP_PREFIX"] = config.PASH_TMP_PREFIX
+    new_env["pash_shell_name"] = shell_name
     ## TODO: This introduces an error when setting the bsah state inside. The set +c doesn't work.
     subprocess_args = ["/usr/bin/env", "bash", "-c", 'source {}'.format(compiled_script_filename), shell_name] + arguments
     # subprocess_args = ["/usr/bin/env", "bash", compiled_script_filename] + arguments
-    log("Executing:", "PASH_TMP_PREFIX={} {}".format(config.PASH_TMP_PREFIX, " ".join(subprocess_args)))
+    log("Executing:", "PASH_TMP_PREFIX={} pash_shell_name={} {}".format(config.PASH_TMP_PREFIX, 
+                                                                        shell_name,
+                                                                        " ".join(subprocess_args)))
     exec_obj = subprocess.run(subprocess_args, env=new_env)
     ## Delete the temp directory when not debugging
     if(debug_level == 0):

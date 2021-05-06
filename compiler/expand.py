@@ -221,6 +221,8 @@ def lookup_variable(var, config):
         except:
             val = ''
         return (None, val)
+    elif(var == '0'):
+        return config['shell_variables']['pash_shell_name']
     else:
         return config['shell_variables'].get(var, [None, None])
 
