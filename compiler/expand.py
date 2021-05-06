@@ -201,7 +201,30 @@ class InvalidVariable(RuntimeError):
         self.reason = reason
 
 def lookup_variable(var, config):
-    return config['shell_variables'].get(var, [None, None])
+    ## If the variable is input arguments then get it from pash_input_args.
+    ##
+    ## TODO KK 2021-05-05 Do we need to split using IFS or is it always spaces?
+    ##
+    ## TODO KK 2021-05-05 Maybe instead of this we could do this setup
+    ##      once during initialization and leave lookup unaltered?
+    if(var == '@'):
+        return config['shell_variables']['pash_input_args']
+    elif(var == '#'):
+        _type, input_args = config['shell_variables']['pash_input_args']
+        return (None, str(len(input_args.split())))
+    elif(var.isnumeric() and int(var) >= 1):
+        _type, input_args = config['shell_variables']['pash_input_args']
+        split_args = input_args.split()
+        index = int(var) - 1
+        try:
+            val = split_args[index]
+        except:
+            val = ''
+        return (None, val)
+    elif(var == '0'):
+        return config['shell_variables']['pash_shell_name']
+    else:
+        return config['shell_variables'].get(var, [None, None])
 
 def invalidate_variable(var, reason, config):
     config['shell_variables'][var] = [None, InvalidVariable(var, reason)]

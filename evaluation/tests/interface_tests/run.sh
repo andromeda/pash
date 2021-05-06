@@ -4,7 +4,7 @@ export PASH_TOP=${PASH_TOP:-$(git rev-parse --show-toplevel --show-superproject-
 
 ## TODO: Make the compiler work too.
 bash="bash"
-pash="$PASH_TOP/pa.sh --dry_run_compiler"
+pash="$PASH_TOP/pa.sh"
 
 output_dir="$PASH_TOP/evaluation/tests/interface_tests/output"
 mkdir -p "$output_dir"
