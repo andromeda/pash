@@ -83,7 +83,7 @@ def parse_args():
         log(arg_name, arg_val)
     log("-" * 40)
 
-    ## TODO: Properly assign this to the pa.sh entry point
+    ## TODO: We might need to have a better default (like $0 of pa.sh)
     shell_name = "pash"
 
     ## Make a directory for temporary files
