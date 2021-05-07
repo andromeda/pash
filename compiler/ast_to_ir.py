@@ -495,7 +495,6 @@ def replace_ast_regions(ast_objects, irFileGen, config):
         # log("Preprocessing AST {}".format(i))
         # log(ast_object)
         ast, original_text, _linno_before, _linno_after = ast_object
-
         ## TODO: Turn the untyped ast to an AstNode
 
         ## Goals: This transformation can approximate in several directions.

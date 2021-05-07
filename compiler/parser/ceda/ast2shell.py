@@ -209,7 +209,7 @@ def to_string (ast):
         elif (type == "For"):
             (_, a, body, var) = params;
 
-            return "for " + var + " in " + string_of_arg (a) + "; do " + \
+            return "for " + var + " in " + separated (string_of_arg, a) + "; do " + \
                    to_string (body) + "; done";
         elif (type == "Case"):
             (_, a, cs) = params;

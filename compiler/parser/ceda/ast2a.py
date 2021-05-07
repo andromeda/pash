@@ -120,7 +120,7 @@ def of_node (n_ptr):
         elif (n.type == NFOR):
             return ["For",
                     [n.nfor.linno,
-                     to_arg (n.nfor.args.contents.narg),
+                     to_args (n.nfor.args),
                      of_node (n.nfor.body),
                      n.nfor.var.decode ("charmap")]];
         elif (n.type == NDEFUN):
